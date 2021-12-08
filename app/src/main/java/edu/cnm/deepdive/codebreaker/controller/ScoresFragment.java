@@ -1,5 +1,6 @@
 package edu.cnm.deepdive.codebreaker.controller;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +14,6 @@ import edu.cnm.deepdive.codebreaker.R;
 import edu.cnm.deepdive.codebreaker.adapter.GameSummaryAdapter;
 import edu.cnm.deepdive.codebreaker.databinding.FragmentScoresBinding;
 import edu.cnm.deepdive.codebreaker.viewmodel.ScoresViewModel;
-import java.util.function.BiConsumer;
 
 public class ScoresFragment extends Fragment {
 
@@ -23,11 +23,14 @@ public class ScoresFragment extends Fragment {
   public View onCreateView(@NonNull LayoutInflater inflater,
       ViewGroup container, Bundle savedInstanceState) {
     binding = FragmentScoresBinding.inflate(inflater, container, false);
+    Resources resources = getResources();
+    binding.codeLengthDisplay.setText(
+        String.valueOf(resources.getInteger(R.integer.code_length_pref_default)));
+    binding.poolSizeDisplay.setText(
+        String.valueOf(resources.getInteger(R.integer.pool_size_pref_default)));
     binding.codeLength.setOnSeekBarChangeListener(
         (SimpleChangeListener) this::handleCodeLengthChange);
     binding.poolSize.setOnSeekBarChangeListener((SimpleChangeListener) this::handlePoolSizeChange);
-    binding.header.time.setOnClickListener((v) -> handleSortedByTimeChange(true, true));
-    binding.header.guesses.setOnClickListener((v) -> handleSortedByTimeChange(false, true));
     return binding.getRoot();
   }
 
